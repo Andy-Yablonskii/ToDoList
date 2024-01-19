@@ -1,3 +1,4 @@
 export * from './header'
-export * from './tab.navigation.bar'
+export * from './tabNavigationBar'
 export * from './input'
+export * from './taskItem'

@@ -1,10 +1,8 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AllScreen } from "../screens/all.screen";
-import { ActiveScreen } from "../screens/active.screen";
-import { CompletedScreen } from "../screens/completed.screen";
-import { CustomTabBar } from "../components/tab.navigation.bar/tab.navigation.bar";
+import { ActiveScreen, AllScreen, CompletedScreen } from "@screens";
+import { CustomTabBar } from "@components";
 
 const Tab = createBottomTabNavigator();
 

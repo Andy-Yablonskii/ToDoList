@@ -1,8 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Header } from "../components";
-import { Input } from "../components/input/input";
-import { TaskItem } from "../components/toDoItem/taskItem";
+import { TaskItem, Input, Header } from "@components";
 
 export const AllScreen = ({ navigation }) => {
   React.useLayoutEffect(() => {
