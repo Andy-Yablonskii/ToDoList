@@ -1,28 +1,43 @@
-import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Arrow from "react-native-vector-icons/Entypo";
 
-export const Input = () => {
-  const [isFocused, setIsFocused] = useState(false);
+export const Input = ({ tasks, setTasks }) => {
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    console.log(tasks);
+  }, [tasks]); // Run this effect whenever tasks is updated
+
+  const addNewTask = () => {
+    if (title.trim() !== "") {
+      const newTask = {
+        title,
+        id: Math.random(),
+        status: false,
+      };
+      setTasks((prevTasks) => [...prevTasks, newTask]); // Use functional update to ensure the latest state
+      setTitle("");
+      
+    }
+  };
 
   return (
-    <View style={[styles.container, isFocused && styles.containerFocused]}>
-      <View style={styles.checkboxContainer}>
+    <View style={[styles.container]}>
+      <View style={styles.arrow}>
         <TouchableOpacity>
           <Arrow name="chevron-down" size={30} color="#777777" />
         </TouchableOpacity>
       </View>
 
       <TextInput
-        style={[styles.input, isFocused && styles.inputFocused]}
+        style={[styles.input]}
         placeholder="What needs to be done?"
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        value={title}
+        onChangeText={(text) => {
+          setTitle(text);
+        }}
+        onSubmitEditing={addNewTask}
       />
     </View>
   );
@@ -34,14 +49,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     minHeight: 60,
-    maxWidth: "90%",
     borderWidth: 1,
     borderColor: "#c4c2c23a",
   },
   containerFocused: {
     borderColor: "#b83f45",
   },
-  checkboxContainer: {
+  arrow: {
     paddingLeft: 10,
   },
   input: {

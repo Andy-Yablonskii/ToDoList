@@ -11,8 +11,7 @@ export const ActiveScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Header  />
-      
+      <Header/>
     </View>
   );
 };

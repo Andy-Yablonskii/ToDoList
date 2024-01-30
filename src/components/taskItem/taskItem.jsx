@@ -1,26 +1,29 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TextInput, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import CheckBox from "react-native-vector-icons/Feather";
 
-export const TaskItem = () => {
-  const [taskName, setTaskName] = useState("Temporary Task");
-  const [isChecked, setIsChecked] = useState(false);
-
-  const toggleCheckBox = () => {
-    setIsChecked(!isChecked);
+export const TaskItem = ({
+  taskName,
+  isChecked,
+  id,
+  tasks,
+  setTasks,
+  onToggle,
+}) => {
+  const handleToggle = () => {
+    if (onToggle) {
+      onToggle(!isChecked);
+    }
   };
 
-  const handleTextClick = () => {
-    toggleCheckBox();
-  };
-
-  const handleDeleteTask = () => {
-    // Implement task deletion logic here
+  const handleDelete = () => {
+    const newTasks = tasks.filter((el) => el.id !== id);
+    setTasks(newTasks);
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleCheckBox}>
+      <TouchableOpacity onPress={handleToggle}>
         <View style={styles.checkboxContainer}>
           <CheckBox
             name={isChecked ? "check-circle" : "circle"}
@@ -30,15 +33,18 @@ export const TaskItem = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleTextClick} style={styles.textContainer}>
-        <Text style={[styles.taskName, isChecked && styles.crossedText]}>
-          {taskName}
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={handleDeleteTask} style={styles.deleteContainer}>
-        <CheckBox name="x-circle" size={26} color="#777777" />
-      </TouchableOpacity>
+      <View style={styles.textContainer}>
+        <TouchableOpacity onPress={handleToggle}>
+          <Text style={[styles.taskName, isChecked && styles.crossedText]}>
+            {taskName}
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.checkboxContainer}>
+        <TouchableOpacity onPress={handleDelete}>
+          <CheckBox name="x-circle" size={26} color={"#777777"} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -61,9 +67,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     paddingHorizontal: 10,
-  },
-  deleteContainer: {
-    paddingRight: 13,
   },
   taskName: {
     fontSize: 23,
