@@ -4,6 +4,7 @@ import Arrow from "react-native-vector-icons/Entypo";
 
 export const Input = ({ tasks, setTasks }) => {
   const [title, setTitle] = useState("");
+  const [areTasksChecked, setAreTasksChecked] = useState(false);
 
   const addNewTask = () => {
     if (title.trim() !== "") {
@@ -17,10 +18,19 @@ export const Input = ({ tasks, setTasks }) => {
     }
   };
 
+  const setAllTasksStatus = () => {
+    const updatedTasks = tasks.map((task) => ({
+      ...task,
+      status: !areTasksChecked,
+    }));
+    setTasks(updatedTasks);
+    setAreTasksChecked(!areTasksChecked);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.arrow}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={setAllTasksStatus}>
           <Arrow name="chevron-down" size={30} color="#777777" />
         </TouchableOpacity>
       </View>

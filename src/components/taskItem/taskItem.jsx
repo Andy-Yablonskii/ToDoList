@@ -23,8 +23,6 @@ export const TaskItem = ({
     }
   };
 
-  
-
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleToggle}>
@@ -33,6 +31,7 @@ export const TaskItem = ({
             name={isChecked ? "check-circle" : "circle"}
             size={26}
             color={isChecked ? "#b83f45" : "#777777"}
+
           />
         </View>
       </TouchableOpacity>
