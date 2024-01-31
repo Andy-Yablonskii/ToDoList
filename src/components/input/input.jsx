@@ -10,7 +10,7 @@ export const Input = ({ tasks, setTasks }) => {
     if (title.trim() !== "") {
       const newTask = {
         title,
-        id: Math.random(),
+        id: new Date().getTime(), 
         status: false,
       };
       setTasks((prevTasks) => [...prevTasks, newTask]);
