@@ -3,7 +3,6 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { TaskItem, Header } from "@components";
 
 export const CompletedScreen = ({ navigation, tasks, setTasks }) => {
-
   useEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -19,20 +18,20 @@ export const CompletedScreen = ({ navigation, tasks, setTasks }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => console.log(tasks)}>
-        <Header />
-      </TouchableOpacity>
-      {tasks.filter(el => !!el.status).map((el, key) => (
-        <TaskItem
-          key={key}
-          taskName={el.title}
-          isChecked={el.status}
-          id={el.id}
-          tasks={tasks}
-          setTasks={setTasks}
-          onToggle={handleToggle}
-        />
-      ))}
+      <Header />
+      {tasks
+        .filter((el) => !!el.status)
+        .map((el, key) => (
+          <TaskItem
+            key={key}
+            taskName={el.title}
+            isChecked={el.status}
+            id={el.id}
+            tasks={tasks}
+            setTasks={setTasks}
+            onToggle={handleToggle}
+          />
+        ))}
     </View>
   );
 };
