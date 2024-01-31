@@ -2,13 +2,20 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { TaskItem, Input, Header, tasks } from "@components";
 
-export const AllScreen = ({ navigation }) => {
-  const [tasks, setTasks] = useState([]);
+export const AllScreen = ({ tasks, setTasks, navigation }) => {
+  // const [tasks, setTasks] = useState([]);
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, [navigation]);
+
+  const handleToggle = (taskId, newStatus) => {
+    const updatedTasks = tasks.map(task =>
+      task.id === taskId ? { ...task, status: newStatus } : task
+    );
+    setTasks(updatedTasks);
+  };
 
   return (
     <View style={styles.container}>
@@ -21,6 +28,9 @@ export const AllScreen = ({ navigation }) => {
             taskName={el.title}
             isChecked={el.status}
             id={el.id}
+            tasks={tasks}
+            setTasks={setTasks}
+            onToggle={handleToggle}
           />
         ))}
       </View>

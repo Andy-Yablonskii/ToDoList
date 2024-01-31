@@ -1,18 +1,38 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
-import { TaskItem, Input, Header } from "@components";
+import React, { useEffect } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { TaskItem, Header } from "@components";
 
-export const CompletedScreen = ({ navigation }) => {
-  React.useLayoutEffect(() => {
+export const CompletedScreen = ({ navigation, tasks, setTasks }) => {
+
+  useEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, [navigation]);
 
+  const handleToggle = (taskId, newStatus) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, status: newStatus } : task
+    );
+    setTasks(updatedTasks);
+  };
+
   return (
     <View style={styles.container}>
-      <Header />
-      
+      <TouchableOpacity onPress={() => console.log(tasks)}>
+        <Header />
+      </TouchableOpacity>
+      {tasks.filter(el => !!el.status).map((el, key) => (
+        <TaskItem
+          key={key}
+          taskName={el.title}
+          isChecked={el.status}
+          id={el.id}
+          tasks={tasks}
+          setTasks={setTasks}
+          onToggle={handleToggle}
+        />
+      ))}
     </View>
   );
 };

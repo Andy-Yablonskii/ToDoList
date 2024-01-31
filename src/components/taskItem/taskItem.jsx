@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import React from "react";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import CheckBox from "react-native-vector-icons/Feather";
 
 export const TaskItem = ({
@@ -12,14 +12,18 @@ export const TaskItem = ({
 }) => {
   const handleToggle = () => {
     if (onToggle) {
-      onToggle(!isChecked);
+      onToggle(id, !isChecked); // Pass the id and the new status
     }
   };
 
   const handleDelete = () => {
-    const newTasks = tasks.filter((el) => el.id !== id);
-    setTasks(newTasks);
+    if (setTasks) {
+      const updatedTasks = tasks.filter((task) => task.id !== id);
+      setTasks(updatedTasks);
+    }
   };
+
+  
 
   return (
     <View style={styles.container}>
@@ -40,6 +44,7 @@ export const TaskItem = ({
           </Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.checkboxContainer}>
         <TouchableOpacity onPress={handleDelete}>
           <CheckBox name="x-circle" size={26} color={"#777777"} />

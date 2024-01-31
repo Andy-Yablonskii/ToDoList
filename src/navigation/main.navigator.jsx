@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ActiveScreen, AllScreen, CompletedScreen } from "@screens";
@@ -14,6 +14,8 @@ const MAIN_NAVIGATOR_OPTIONS = {
 };
 
 export const MainNavigator = () => {
+  const [tasks, setTasks] = useState([]);
+
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -21,9 +23,21 @@ export const MainNavigator = () => {
         screenOptions={MAIN_NAVIGATOR_OPTIONS}
         initialRouteName={"All"}
       >
-        <Tab.Screen name="Active" component={ActiveScreen} />
-        <Tab.Screen name="All" component={AllScreen} />
-        <Tab.Screen name="Completed" component={CompletedScreen} />
+        <Tab.Screen name="Active">
+          {(props) => (
+            <ActiveScreen {...props} tasks={tasks} setTasks={setTasks} />
+          )}
+        </Tab.Screen>
+        <Tab.Screen name="All">
+          {(props) => (
+            <AllScreen {...props} tasks={tasks} setTasks={setTasks} />
+          )}
+        </Tab.Screen>
+        <Tab.Screen name="Completed">
+          {(props) => (
+            <CompletedScreen {...props} tasks={tasks} setTasks={setTasks} />
+          )}
+        </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
   );

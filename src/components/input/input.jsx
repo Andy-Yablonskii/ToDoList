@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Arrow from "react-native-vector-icons/Entypo";
 
 export const Input = ({ tasks, setTasks }) => {
   const [title, setTitle] = useState("");
-
-  useEffect(() => {
-    console.log(tasks);
-  }, [tasks]); // Run this effect whenever tasks is updated
 
   const addNewTask = () => {
     if (title.trim() !== "") {
@@ -16,14 +12,13 @@ export const Input = ({ tasks, setTasks }) => {
         id: Math.random(),
         status: false,
       };
-      setTasks((prevTasks) => [...prevTasks, newTask]); // Use functional update to ensure the latest state
+      setTasks((prevTasks) => [...prevTasks, newTask]);
       setTitle("");
-      
     }
   };
 
   return (
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       <View style={styles.arrow}>
         <TouchableOpacity>
           <Arrow name="chevron-down" size={30} color="#777777" />
@@ -31,12 +26,10 @@ export const Input = ({ tasks, setTasks }) => {
       </View>
 
       <TextInput
-        style={[styles.input]}
+        style={styles.input}
         placeholder="What needs to be done?"
         value={title}
-        onChangeText={(text) => {
-          setTitle(text);
-        }}
+        onChangeText={(text) => setTitle(text)}
         onSubmitEditing={addNewTask}
       />
     </View>
